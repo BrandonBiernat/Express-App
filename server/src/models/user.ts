@@ -1,8 +1,16 @@
 export type User = {
-    userId: string,
-    email: string,
-    firstName: string,
-    lastName: string,
-    phoneNumber: string,
-    username: string,
+    UserId: string,
+    Email: string,
+    FirstName: string,
+    LastName: string,
+    PhoneNumber: string,
+    Username: string,
+}
+
+export type UserRequest = {
+    Email: string,
+    FirstName: string,
+    LastName: string,
+    PhoneNumber: string,
+    Username: string,
 }

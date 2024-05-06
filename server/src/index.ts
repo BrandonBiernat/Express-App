@@ -4,12 +4,12 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT;
+const PORT = process.env.PORT;
 
-app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`[server]: Server is running at ${process.env.BASE_URL}:${PORT}`);
 });
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server');
+    res.status(200).send('Express + TypeScript Server');
 });

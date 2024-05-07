@@ -10,6 +10,7 @@ async function register(req: Request, res: Response) {
             res.status(data.status).json(data);
         } else {
             res.status(data.status).json(data);
+            res.redirect('/');
         }
     } catch(e) {
         res.status(500).json({error: e});
@@ -24,6 +25,7 @@ async function login(req: Request, res: Response) {
             res.status(data.status).json(data);
         } else {
             res.status(data.status).json(data);
+            res.redirect('/');
         }
     } catch(e) {
         res.status(500).json({error: e});

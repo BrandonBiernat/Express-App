@@ -1,11 +1,26 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 dotenv.config();
 
 const app: Express = express();
-const PORT = process.env.PORT;
+const PORT = process.env.SERVER_PORT;
+
+// const whitelist = [`${process.env.BASE_URL}:${process.env.CLIENT_PORT}`];
+
+// const corsOptions = {
+//     origin: (origin: any, callback: any) => {
+//         if(whitelist.indexOf(origin) !== -1) {
+//             callback(null, true);
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     }
+// };
+
+// app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));

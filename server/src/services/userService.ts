@@ -1,23 +1,4 @@
-import { User, UserRequest } from '../models/user';
 import { dynamoClient, tables } from '../data/dynamodb';
-import crypto from 'crypto';
-
-async function addUser(user: UserRequest) {
-    const id = crypto.randomUUID().toString();
-    const newUser: User = {
-        UserId: id,
-        Email: user.Email,
-        FirstName: user.FirstName,
-        LastName: user.LastName,
-        PhoneNumber: user.PhoneNumber,
-        Username: user.Username,
-    };
-    const params = {
-        TableName: tables.users,
-        Item: newUser
-    };
-    return await dynamoClient.put(params).promise();
-}
 
 async function getUserById(id: string) {
     const UserId = id;
@@ -27,7 +8,12 @@ async function getUserById(id: string) {
             UserId
         }
     };
-    return await dynamoClient.get(params).promise();
+    const user = await dynamoClient.get(params).promise();
+    return {
+        succeeded: true,
+        status: 200,
+        payload: user.Item
+    };
 }
 
 async function getUsers() {
@@ -45,11 +31,24 @@ async function deleteUser(id: string) {
             UserId
         }
     };
-    return await dynamoClient.delete(params).promise();
+    await dynamoClient.delete(params).promise();
+    const deletedUser = await dynamoClient.get(params).promise();
+    if(!deletedUser) {
+        return {
+            succeeded: true,
+            status: 200,
+            payload: 'user deleted'
+        };
+    } else {
+        return {
+            succeeded: false,
+            status: 400,
+            payload: 'failed to delete user'
+        };
+    }
 }
 
 export {
-    addUser,
     getUserById,
     getUsers,
     deleteUser
